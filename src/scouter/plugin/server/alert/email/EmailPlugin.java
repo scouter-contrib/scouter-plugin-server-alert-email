@@ -73,23 +73,30 @@ public class EmailPlugin {
                         	
                         	if (name.equals("N/A") && pack.message.endsWith("connected.")) {
                     			int idx = pack.message.indexOf("connected");
-                        		if (pack.message.indexOf("(re)") > -1) {
-                        			name = pack.message.substring(0, idx - 8);
+                        		if (pack.message.indexOf("reconnected") > -1) {
+                        			name = pack.message.substring(0, idx - 6);
                         		} else {
-                        			name = pack.message.substring(0, idx - 7);
+                        			name = pack.message.substring(0, idx - 4);
                         		}
                         	}
                         	
                         	// Make email subject
                             String subject = "[" + AlertLevel.getName(pack.level) + "] " + pack.objType.toUpperCase() + 
                                           	 "(" + name + ") : " + pack.title;
+                            
+                            String title = pack.title;
+                            String msg = pack.message;
+                            if (title.equals("INACTIVE_OBJECT")) {
+                            	title = "An object has been inactivated.";
+                            	msg = pack.message.substring(0, pack.message.indexOf("OBJECT") - 1);
+                            }
 
                             // Make email message
                             String message = "[TYPE] : " + pack.objType.toUpperCase() + "\n" + 
                                           	 "[NAME] : " + name + "\n" + 
                                           	 "[LEVEL] : " + AlertLevel.getName(pack.level) + "\n" +
-                                          	 "[TITLE] : " + pack.title + "\n" + 
-                                          	 "[MESSAGE] : " + pack.message;
+                                          	 "[TITLE] : " + title + "\n" + 
+                                          	 "[MESSAGE] : " + msg;
                                           
                             // Create an Email instance
                             Email email = new SimpleEmail();
@@ -134,28 +141,30 @@ public class EmailPlugin {
 		if (pack.version != null && pack.version.length() > 0) {
 			AlertPack p = null;
 			if (pack.wakeup == 0L) {
-				// in case of agent (re)connected
+				// in case of new agent connected
 				p = new AlertPack();
-		        p.level = AlertLevel.WARN;
+		        p.level = AlertLevel.INFO;
 		        p.objHash = pack.objHash;
 		        p.title = "An object has been activated.";
-		        p.message = pack.objName + " is (re)connected.";
+		        p.message = pack.objName + " is connected.";
 		        p.time = System.currentTimeMillis();
 		        p.objType = "scouter";
 				
 		        alert(p);
 			} else if (pack.alive == false) {
-				// in case of agent disconnected
+				// in case of agent reconnected
 				p = new AlertPack();
-		        p.level = AlertLevel.WARN;
+		        p.level = AlertLevel.INFO;
 		        p.objHash = pack.objHash;
-		        p.title = "An object has been inactivated.";
-		        p.message = pack.objName + " is disconnected.";
+		        p.title = "An object has been activated.";
+		        p.message = pack.objName + " is reconnected.";
 		        p.time = System.currentTimeMillis();
 		        p.objType = "scouter";
 				
 		        alert(p);
 			}
+			
+			// inactive state can be handled in alert() method.
 		}
 	}
 
