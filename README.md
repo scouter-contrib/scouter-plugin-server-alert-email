@@ -2,6 +2,12 @@
 ### Scouter server plugin to send a alert via email
 
 - 본 프로젝트는 스카우터 서버 플러그인으로써 서버에서 발생한 Alert 메시지를 Email로 발송하는 역할을 한다.
+- 현재 지원되는 Alert의 종류는 다음과 같다.
+	- Agent의 CPU (warning / fatal)
+	- Agent의 Memory (warning / fatal)
+	- Agent의 Disk (warning / fatal)
+	- 신규 Agent 연결
+	- Agent의 연결 해제 (연결 해제된 Agent의 재접속은 Scouter Server 내부 이슈로 지연)
 
 ### Properties (스카우터 서버 설치 경로 하위의 conf/scouter.conf)
 * **_ext\_plugin\_email\_send_alert_** : Email 발송 여부 (true / false) - 기본 값은 false
