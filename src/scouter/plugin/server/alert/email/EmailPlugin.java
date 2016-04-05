@@ -138,34 +138,35 @@ public class EmailPlugin {
     
 	@ServerPlugin(PluginConstants.PLUGIN_SERVER_OBJECT)
 	public void object(ObjectPack pack) {
-		if (pack.version != null && pack.version.length() > 0) {
-			AlertPack p = null;
-			if (pack.wakeup == 0L) {
+    	if (pack.version != null && pack.version.length() > 0) {
+			AlertPack ap = null;
+			ObjectPack op = AgentManager.getAgent(pack.objHash);
+	    	
+			if (op == null && pack.wakeup == 0L) {
 				// in case of new agent connected
-				p = new AlertPack();
-		        p.level = AlertLevel.INFO;
-		        p.objHash = pack.objHash;
-		        p.title = "An object has been activated.";
-		        p.message = pack.objName + " is connected.";
-		        p.time = System.currentTimeMillis();
-		        p.objType = "scouter";
+				ap = new AlertPack();
+		        ap.level = AlertLevel.INFO;
+		        ap.objHash = pack.objHash;
+		        ap.title = "An object has been activated.";
+		        ap.message = pack.objName + " is connected.";
+		        ap.time = System.currentTimeMillis();
+		        ap.objType = "scouter";
 				
-		        alert(p);
-			} else if (pack.alive == false) {
+		        alert(ap);
+	    	} else if (op.alive == false) {
 				// in case of agent reconnected
-				p = new AlertPack();
-		        p.level = AlertLevel.INFO;
-		        p.objHash = pack.objHash;
-		        p.title = "An object has been activated.";
-		        p.message = pack.objName + " is reconnected.";
-		        p.time = System.currentTimeMillis();
-		        p.objType = "scouter";
+				ap = new AlertPack();
+		        ap.level = AlertLevel.INFO;
+		        ap.objHash = pack.objHash;
+		        ap.title = "An object has been activated.";
+		        ap.message = pack.objName + " is reconnected.";
+		        ap.time = System.currentTimeMillis();
+		        ap.objType = "scouter";
 				
-		        alert(p);
-			}
-			
+		        alert(ap);
+	    	}
 			// inactive state can be handled in alert() method.
-		}
+    	}
 	}
 
     private void println(Object o) {
