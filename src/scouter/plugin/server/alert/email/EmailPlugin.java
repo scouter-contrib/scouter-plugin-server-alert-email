@@ -71,28 +71,32 @@ public class EmailPlugin {
 				@Override
 				public void run() {
 					for (int objHash : javaeeObjHashList) {
-						if (AgentManager.isActive(objHash)) {
-							ObjectPack objectPack = AgentManager.getAgent(objHash);
-							MapPack mapPack = new MapPack();
-			            	mapPack.put("objHash", objHash);
-			            	
-							mapPack = AgentCall.call(objectPack, RequestCmd.OBJECT_THREAD_LIST, mapPack);
-							
-			        		int threadCountThreshold = conf.getInt("ext_plugin_thread_count_threshold", 0);
-			        		int threadCount = mapPack.getList("name").size();
-			        		
-			        		if (threadCountThreshold != 0 && threadCount > threadCountThreshold) {
-			        			AlertPack ap = new AlertPack();
-			        			
-			    		        ap.level = AlertLevel.WARN;
-			    		        ap.objHash = objHash;
-			    		        ap.title = "Thread count exceed a threahold.";
-			    		        ap.message = objectPack.objName + "'s Thread count(" + threadCount + ") exceed a threshold.";
-			    		        ap.time = System.currentTimeMillis();
-			    		        ap.objType = objectPack.objType;
-			    				
-			    		        alert(ap);
-			        		}
+						try {
+							if (AgentManager.isActive(objHash)) {
+								ObjectPack objectPack = AgentManager.getAgent(objHash);
+								MapPack mapPack = new MapPack();
+				            	mapPack.put("objHash", objHash);
+				            	
+								mapPack = AgentCall.call(objectPack, RequestCmd.OBJECT_THREAD_LIST, mapPack);
+								
+				        		int threadCountThreshold = conf.getInt("ext_plugin_thread_count_threshold", 0);
+				        		int threadCount = mapPack.getList("name").size();
+				        		
+				        		if (threadCountThreshold != 0 && threadCount > threadCountThreshold) {
+				        			AlertPack ap = new AlertPack();
+				        			
+				    		        ap.level = AlertLevel.WARN;
+				    		        ap.objHash = objHash;
+				    		        ap.title = "Thread count exceed a threahold.";
+				    		        ap.message = objectPack.objName + "'s Thread count(" + threadCount + ") exceed a threshold.";
+				    		        ap.time = System.currentTimeMillis();
+				    		        ap.objType = objectPack.objType;
+				    				
+				    		        alert(ap);
+				        		}
+							}
+						} catch (Exception e) {
+							// ignore
 						}
 					}
 				}
