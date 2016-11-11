@@ -294,7 +294,7 @@ public class EmailPlugin {
 	        			
 	    		        ap.level = AlertLevel.WARN;
 	    		        ap.objHash = objHash;
-	    		        ap.title = "Elapsed time exceed a threahold.";
+	    		        ap.title = "GC time exceed a threahold.";
 	    		        ap.message = objName + "'s GC time(" + gcTime + " ms) exceed a threshold.";
 	    		        ap.time = System.currentTimeMillis();
 	    		        ap.objType = objType;
