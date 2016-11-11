@@ -27,7 +27,7 @@
 * **_ext\_plugin\_email\_cc_address_** : Email 참조 수신 계정(다중 사용자 지정 시 ',' 구분자 사용)
 * **_ext\_plugin\_elapsed\_time_threshold_** : 응답시간의 임계치 (ms) - 기본 값은 0으로, 0일때 응답시간의 임계치 초과 여부를 확인하지 않는다.
 * **_ext\_plugin\_gc\_time_threshold_** : GC Time의 임계치 (ms) - 기본 값은 0으로, 0일때 GC Time의 임계치 초과 여부를 확인하지 않는다.
-* **_ext\_plugin\_thread\_count_threshold_** : Thread Count의 임계치 (ms) - 기본 값은 0으로, 0일때 Thread Count의 임계치 초과 여부를 확인하지 않는다.
+* **_ext\_plugin\_thread\_count_threshold_** : Thread Count의 임계치 - 기본 값은 0으로, 0일때 Thread Count의 임계치 초과 여부를 확인하지 않는다.
 
 
 
