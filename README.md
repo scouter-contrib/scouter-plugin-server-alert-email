@@ -9,6 +9,9 @@
 	- 신규 Agent 연결
 	- Agent의 연결 해제
 	- Agent의 재접속
+	- 응답시간의 임계치 초과
+	- GC Time의 임계치 초과
+	- Thread 갯수의 임계치 초과
 
 ### Properties (스카우터 서버 설치 경로 하위의 conf/scouter.conf)
 * **_ext\_plugin\_email\_send_alert_** : Email 발송 여부 (true / false) - 기본 값은 false
@@ -22,6 +25,11 @@
 * **_ext\_plugin\_email\_from_address_** : Email 발신자 계정
 * **_ext\_plugin\_email\_to_address_** : Email 수신 계정(다중 사용자 지정 시 ',' 구분자 사용)
 * **_ext\_plugin\_email\_cc_address_** : Email 참조 수신 계정(다중 사용자 지정 시 ',' 구분자 사용)
+* **_ext\_plugin\_elapsed\_time_threshold_** : 응답시간의 임계치 (ms) - 기본 값은 0으로, 0일때 응답시간의 임계치 초과 여부를 확인하지 않는다.
+* **_ext\_plugin\_gc\_time_threshold_** : GC Time의 임계치 (ms) - 기본 값은 0으로, 0일때 GC Time의 임계치 초과 여부를 확인하지 않는다.
+* **_ext\_plugin\_thread\_count_threshold_** : Thread Count의 임계치 (ms) - 기본 값은 0으로, 0일때 Thread Count의 임계치 초과 여부를 확인하지 않는다.
+
+
 
 * Example
 ```
@@ -37,6 +45,10 @@ ext_plugin_email_tls_enabled=true
 ext_plugin_email_from_address=noreply@scouter.com
 ext_plugin_email_to_address=receiver1@scouter.com,receiver2@scouter.com
 ext_plugin_email_cc_address=ccreceiver@yopmail.com
+
+ext_plugin_elapsed_time_threshold=5000
+ext_plugin_gc_time_threshold=5000
+ext_plugin_thread_count_threshold=300
 ```
 
 ### Dependencies
