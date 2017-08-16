@@ -61,6 +61,8 @@ public class EmailPlugin {
     
     private static AtomicInteger ai = new AtomicInteger(0);
     private static List<Integer> javaeeObjHashList = new ArrayList<Integer>();
+    private static AlertPack lastPack;
+    private static long lastSentTimestamp;
     
     public EmailPlugin() {
     	if (ai.incrementAndGet() == 1) {
@@ -155,6 +157,41 @@ public class EmailPlugin {
                             	title = "An object has been inactivated.";
                             	msg = pack.message.substring(0, pack.message.indexOf("OBJECT") - 1);
                             }
+                            
+                            try {
+	                            String ignoreNamePattern = conf.getValue("ext_plugin_ignore_name_patterns");
+	                            String ignoreTitlePattern = conf.getValue("ext_plugin_ignore_title_patterns");
+	                            
+	                            if (ignoreNamePattern != null && !"".equals(ignoreNamePattern)) {
+		                            for (String pattern : ignoreNamePattern.split(",")) {
+		                        		if (name.matches(".*[" + pattern.replaceAll("-", "\\\\-") + "].*")) {
+		                        			return;
+		                        		}
+		                        	}
+	                            }
+
+	                            if (ignoreTitlePattern != null && !"".equals(ignoreTitlePattern)) {
+		                            for (String pattern : ignoreTitlePattern.split(",")) {
+		                        		if (title.matches(".*[" + pattern.replaceAll("-", "\\\\-") + "].*")) {
+		                        			return;
+		                        		}
+		                        	}
+	                            }
+	                            
+	                            if (conf.getBoolean("ext_plugin_ignore_continuous_dup_alert", false) && lastPack != null) {
+		                            long diff = System.currentTimeMillis() - lastSentTimestamp;
+	                            	if (lastPack.objHash == pack.objHash 
+	                            			&& lastPack.title.equals(pack.title)
+	                            			&& diff < DateUtil.MILLIS_PER_HOUR) {
+	                            		return;
+	                            	}
+	                            }
+	                            
+	                            lastPack = pack;
+                            } catch (Exception e) {
+                            	// ignore
+                            	println("[Error] : " + e.getMessage());
+                            }
 
                             // Make email message
                             String message = "[TYPE] : " + pack.objType.toUpperCase() + "\n" + 
@@ -186,7 +223,8 @@ public class EmailPlugin {
                             
                             // Send the email
                             email.send();
-                            
+
+                        	lastSentTimestamp = System.currentTimeMillis();
                             println("Email sent to [" + to + "] successfully.");
                         } catch (Exception e) {
                         	println("[Error] : " + e.getMessage());
