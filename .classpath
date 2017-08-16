@@ -6,10 +6,10 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/scouter.common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scouter.server"/>
 	<classpathentry kind="lib" path="lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-email-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/javax.mail-1.5.2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scouter-common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scouter-server"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
