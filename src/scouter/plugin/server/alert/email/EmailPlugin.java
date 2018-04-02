@@ -122,7 +122,8 @@ public class EmailPlugin {
                             int port = conf.getInt("ext_plugin_email_smtp_port", 587);
                             String username = conf.getValue("ext_plugin_email_username");
                             String password = conf.getValue("ext_plugin_email_password");
-                            boolean tlsEnabled = conf.getBoolean("ext_plugin_email_tls_enabled", true);
+                            boolean sslEnabled = conf.getBoolean("ext_plugin_email_ssl_enabled", true);
+                            boolean tlsEnabled = conf.getBoolean("ext_plugin_email_starttls_enabled", true);
                             String from = conf.getValue("ext_plugin_email_from_address");
                             String to = conf.getValue("ext_plugin_email_to_address");
                             String cc = conf.getValue("ext_plugin_email_cc_address");
@@ -211,7 +212,13 @@ public class EmailPlugin {
                             Email email = new SimpleEmail();
 
                             email.setHostName(hostname);
-                            email.setSmtpPort(port);
+                            
+                            if (sslEnabled) {
+                                email.setSslSmtpPort(Integer.toString(port));
+                            } else {
+                                email.setSmtpPort(port);
+                            }
+                            
                             email.setAuthenticator(new DefaultAuthenticator(username, password));
                             email.setStartTLSEnabled(tlsEnabled);
                             email.setFrom(from);

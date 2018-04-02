@@ -21,7 +21,8 @@
 * **_ext\_plugin\_email\_smtp_port_** : SMTP Port - 기본 값은 587
 * **_ext\_plugin\_email\_username_** : Email 사용자 계정
 * **_ext\_plugin\_email\_password_** : Email 사용자 비밀번호
-* **_ext\_plugin\_email\_tls_enabled_** : TLS 사용 여부 - 기본 값은 true
+* **_ext\_plugin\_email\_ssl_enabled_** : SSL 사용 여부 - 기본 값은 true
+* **_ext\_plugin\_email\_starttls_enabled_** : STARTTLS 사용 여부 - 기본 값은 true
 * **_ext\_plugin\_email\_from_address_** : Email 발신자 계정
 * **_ext\_plugin\_email\_to_address_** : Email 수신 계정(다중 사용자 지정 시 ',' 구분자 사용)
 * **_ext\_plugin\_email\_cc_address_** : Email 참조 수신 계정(다중 사용자 지정 시 ',' 구분자 사용)
@@ -43,7 +44,8 @@ ext_plugin_email_smtp_hostname=smtp.gmail.com
 ext_plugin_email_smtp_port=587
 ext_plugin_email_username=noreply@scouter.com
 ext_plugin_email_password=password
-ext_plugin_email_tls_enabled=true
+ext_plugin_email_ssl_enabled=true
+ext_plugin_email_starttls_enabled=true
 ext_plugin_email_from_address=noreply@scouter.com
 ext_plugin_email_to_address=receiver1@scouter.com,receiver2@scouter.com
 ext_plugin_email_cc_address=ccreceiver@yopmail.com
@@ -69,7 +71,7 @@ ext_plugin_ignore_continuous_dup_alert=true
     
 ### Build & Deploy
 * Build
-    - 프로젝트 내의 build.xml을 실행한다.
+    - mvn clean package를 실행한다.
     
 * Deploy
-    - 빌드 후 프로젝트 하위에 out 디렉토리가 생기며, 디펜던시 라이브러리와 함께 scouter-plugin-server-alert-email.jar 파일을 복사하여 스카우터 서버 설치 경로 하위의 lib/ 폴더에 저장한다.
+    - Maven 빌드 후 target/lib 디렉토리의 디펜던시 라이브러리와 함께 scouter-plugin-server-alert-email-1.0.0.jar 파일을 복사하여 스카우터 서버 설치 경로 하위의 lib/ 폴더에 저장한다.
