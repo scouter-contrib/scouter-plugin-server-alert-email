@@ -120,6 +120,7 @@ public class EmailPlugin {
                             // Get server configurations for email
                             String hostname = conf.getValue("ext_plugin_email_smtp_hostname", "smtp.gmail.com");
                             int port = conf.getInt("ext_plugin_email_smtp_port", 587);
+                            boolean authEnabled = conf.getBoolean("ext_plugin_email_smtpauth_enabled", true);
                             String username = conf.getValue("ext_plugin_email_username");
                             String password = conf.getValue("ext_plugin_email_password");
                             boolean sslEnabled = conf.getBoolean("ext_plugin_email_ssl_enabled", true);
@@ -219,7 +220,9 @@ public class EmailPlugin {
                                 email.setSmtpPort(port);
                             }
                             
-                            email.setAuthenticator(new DefaultAuthenticator(username, password));
+                            if (authEnabled) {
+                                email.setAuthenticator(new DefaultAuthenticator(username, password));
+                            }
                             email.setStartTLSEnabled(tlsEnabled);
                             email.setFrom(from);
                             email.setSubject(subject);

@@ -19,6 +19,7 @@
 * **_ext\_plugin\_email\_level_** : 수신 레벨(0 : INFO, 1 : WARN, 2 : ERROR, 3 : FATAL) - 기본 값은 0
 * **_ext\_plugin\_email\_smtp_hostname_** : SMTP 서버의 IP 또는 Domain - 기본 값은 smtp.gmail.com
 * **_ext\_plugin\_email\_smtp_port_** : SMTP Port - 기본 값은 587
+* **_ext\_plugin\_email\_smtpauth_enabled_** : SMTP 인증 사용 여부 - 기본 값은 true
 * **_ext\_plugin\_email\_username_** : Email 사용자 계정
 * **_ext\_plugin\_email\_password_** : Email 사용자 비밀번호
 * **_ext\_plugin\_email\_ssl_enabled_** : SSL 사용 여부 - 기본 값은 true
@@ -42,6 +43,7 @@ ext_plugin_email_debug=true
 ext_plugin_email_level=0
 ext_plugin_email_smtp_hostname=smtp.gmail.com
 ext_plugin_email_smtp_port=587
+ext_plugin_email_smtpauth_enabled=true
 ext_plugin_email_username=noreply@scouter.com
 ext_plugin_email_password=password
 ext_plugin_email_ssl_enabled=true
